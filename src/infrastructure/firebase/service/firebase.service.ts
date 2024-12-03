@@ -6,6 +6,8 @@ import {
   FIREBASE_CONFIG_TOKEN,
   IFirebaseConfig,
 } from '../config/firebase.config';
+import { HandleError } from '../../../common/decorators/handle-error.decorator';
+import { IUser } from '../../../models/user.model';
 
 @Injectable()
 export class FirebaseService {
@@ -21,5 +23,15 @@ export class FirebaseService {
         clientEmail: firebaseConfig.clientEmail,
       }),
     });
+  }
+
+  @HandleError
+  async createUser(iUser: IUser) {
+    const res = await this.firebaseAdmin.auth().createUser({
+      displayName: iUser.firstName,
+      email: iUser.email,
+      password: iUser.password,
+    });
+    console.log(res);
   }
 }

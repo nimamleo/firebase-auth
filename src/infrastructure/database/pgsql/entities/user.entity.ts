@@ -13,6 +13,9 @@ export class UserEntity {
   @PrimaryGeneratedColumn('increment', { type: 'bigint', unsigned: true })
   id: number;
 
+  @Column({ type: 'varchar', length: 225 })
+  firstName: string;
+
   @Column({ type: 'varchar', length: 225, unique: true })
   email: string;
 
@@ -38,6 +41,7 @@ export class UserEntity {
     user.email = iUser.email;
     user.role = iUser.role;
     user.password = iUser.password;
+    user.firstName = iUser.firstName;
 
     return user;
   }
@@ -51,6 +55,7 @@ export class UserEntity {
       id: user.id.toString(),
       email: user.email,
       role: user.role,
+      firstName: user.firstName,
       password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

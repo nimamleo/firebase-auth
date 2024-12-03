@@ -3,6 +3,7 @@ import { IDated } from '../common/interfaces/dated.interface';
 import { Role } from '../enum/role.enum';
 
 export interface IUser {
+  firstName: string;
   password: string;
   email: string;
   role: Role;
