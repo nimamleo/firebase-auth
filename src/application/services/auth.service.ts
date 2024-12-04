@@ -53,6 +53,7 @@ export class AuthService {
     if (res.isError()) {
       return Err(res.err);
     }
+    console.log(res);
 
     return Ok({
       email: res.value.email,

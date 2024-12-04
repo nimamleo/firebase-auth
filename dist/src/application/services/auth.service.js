@@ -48,6 +48,7 @@ let AuthService = class AuthService {
         if (res.isError()) {
             return (0, result_1.Err)(res.err);
         }
+        console.log(res);
         return (0, result_1.Ok)({
             email: res.value.email,
             password: null,

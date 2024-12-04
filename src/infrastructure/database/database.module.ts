@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { IPgsqlConfig, PGSQL_CONFIG_TOKEN } from './pgsql/config/pgsql.config';
 import { USER_DATABASE_PROVIDER } from './provider/user.provider';
 import { UserPgSqlService } from './pgsql/service/user-pgsql.service';
+import { BlogEntity } from './pgsql/entities/blog.entity';
 
 @Module({
   imports: [
@@ -23,12 +24,12 @@ import { UserPgSqlService } from './pgsql/service/user-pgsql.service';
           migrationsRun: true,
           synchronize: false,
           migrations: [],
-          entities: [UserEntity],
+          entities: [UserEntity, BlogEntity],
           logging: true,
         };
       },
     }),
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity, BlogEntity]),
   ],
   providers: [
     {

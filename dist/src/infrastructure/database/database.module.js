@@ -14,6 +14,7 @@ const config_1 = require("@nestjs/config");
 const pgsql_config_1 = require("./pgsql/config/pgsql.config");
 const user_provider_1 = require("./provider/user.provider");
 const user_pgsql_service_1 = require("./pgsql/service/user-pgsql.service");
+const blog_entity_1 = require("./pgsql/entities/blog.entity");
 let DatabaseModule = class DatabaseModule {
 };
 exports.DatabaseModule = DatabaseModule;
@@ -35,12 +36,12 @@ exports.DatabaseModule = DatabaseModule = __decorate([
                         migrationsRun: true,
                         synchronize: false,
                         migrations: [],
-                        entities: [user_entity_1.UserEntity],
+                        entities: [user_entity_1.UserEntity, blog_entity_1.BlogEntity],
                         logging: true,
                     };
                 },
             }),
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.UserEntity]),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.UserEntity, blog_entity_1.BlogEntity]),
         ],
         providers: [
             {

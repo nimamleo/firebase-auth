@@ -10,13 +10,14 @@ exports.IoModule = void 0;
 const common_1 = require("@nestjs/common");
 const auth_http_controller_1 = require("./http/controllers/auth/auth-http.controller");
 const application_module_1 = require("../application/application.module");
+const blog_http_controller_1 = require("./http/controllers/blog/blog-http.controller");
 let IoModule = class IoModule {
 };
 exports.IoModule = IoModule;
 exports.IoModule = IoModule = __decorate([
     (0, common_1.Module)({
         imports: [application_module_1.ApplicationModule],
-        controllers: [auth_http_controller_1.AuthHttpController],
+        controllers: [auth_http_controller_1.AuthHttpController, blog_http_controller_1.BlogHttpController],
     })
 ], IoModule);
 //# sourceMappingURL=io.module.js.map
