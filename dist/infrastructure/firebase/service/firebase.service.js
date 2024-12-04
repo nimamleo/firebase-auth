@@ -11,24 +11,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirebaseService = void 0;
 const common_1 = require("@nestjs/common");
-const firebaseAdmin = require("firebase-admin");
-const config_1 = require("@nestjs/config");
-const firebase_config_1 = require("../config/firebase.config");
+const handle_error_decorator_1 = require("../../../common/decorators/handle-error.decorator");
 let FirebaseService = class FirebaseService {
-    constructor(configService) {
-        const firebaseConfig = configService.get(firebase_config_1.FIREBASE_CONFIG_TOKEN);
-        this.firebaseAdmin = firebaseAdmin.initializeApp({
-            credential: firebaseAdmin.credential.cert({
-                privateKey: firebaseConfig.privateKey,
-                projectId: firebaseConfig.projectId,
-                clientEmail: firebaseConfig.clientEmail,
-            }),
+    constructor() { }
+    async createUser(iUser) {
+        const res = await this.firebaseAdmin.auth().createUser({
+            displayName: iUser.firstName,
+            email: iUser.email,
+            password: iUser.password,
         });
+        console.log(res);
     }
 };
 exports.FirebaseService = FirebaseService;
+__decorate([
+    handle_error_decorator_1.HandleError,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], FirebaseService.prototype, "createUser", null);
 exports.FirebaseService = FirebaseService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [])
 ], FirebaseService);
 //# sourceMappingURL=firebase.service.js.map

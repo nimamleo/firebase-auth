@@ -17,11 +17,21 @@ const common_1 = require("@nestjs/common");
 const abstract_http_controller_1 = require("../../../../common/http/abstract-http.controller");
 const swagger_1 = require("@nestjs/swagger");
 const register_model_1 = require("./models/register.model");
+const auth_service_1 = require("../../../../application/services/auth.service");
+const role_enum_1 = require("../../../../enum/role.enum");
 let AuthHttpController = class AuthHttpController extends abstract_http_controller_1.AbstractHttpController {
-    constructor() {
+    constructor(authService) {
         super();
+        this.authService = authService;
     }
-    async register(response, body) { }
+    async register(response, body) {
+        const res = await this.authService.register({
+            email: body.email,
+            password: body.password,
+            role: role_enum_1.Role.USER,
+            firstName: body.firstName,
+        });
+    }
 };
 exports.AuthHttpController = AuthHttpController;
 __decorate([
@@ -37,6 +47,6 @@ exports.AuthHttpController = AuthHttpController = __decorate([
     (0, common_1.Controller)('auth'),
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, swagger_1.ApiTags)('AUTH'),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthHttpController);
 //# sourceMappingURL=auth-http.controller.js.map

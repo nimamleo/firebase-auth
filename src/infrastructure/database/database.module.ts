@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './pgsql/entities/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { IPgsqlConfig, PGSQL_CONFIG_TOKEN } from './pgsql/config/pgsql.config';
+import { USER_DATABASE_PROVIDER } from './provider/user.provider';
+import { UserPgSqlService } from './pgsql/service/user-pgsql.service';
 
 @Module({
   imports: [
@@ -28,5 +30,12 @@ import { IPgsqlConfig, PGSQL_CONFIG_TOKEN } from './pgsql/config/pgsql.config';
     }),
     TypeOrmModule.forFeature([UserEntity]),
   ],
+  providers: [
+    {
+      provide: USER_DATABASE_PROVIDER,
+      useClass: UserPgSqlService,
+    },
+  ],
+  exports: [USER_DATABASE_PROVIDER],
 })
 export class DatabaseModule {}

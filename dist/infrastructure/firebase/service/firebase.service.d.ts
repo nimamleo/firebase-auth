@@ -1,5 +1,6 @@
-import { ConfigService } from '@nestjs/config';
+import { IUser } from '../../../models/user.model';
 export declare class FirebaseService {
     private readonly firebaseAdmin;
-    constructor(configService: ConfigService);
+    constructor();
+    createUser(iUser: IUser): Promise<void>;
 }
