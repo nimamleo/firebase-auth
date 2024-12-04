@@ -12,14 +12,16 @@ const database_module_1 = require("../infrastructure/database/database.module");
 const auth_service_1 = require("./services/auth.service");
 const firebase_module_1 = require("../infrastructure/firebase/firebase.module");
 const config_1 = require("@nestjs/config");
+const blog_service_1 = require("./services/blog.service");
+const storage_module_1 = require("../infrastructure/storage/storage.module");
 let ApplicationModule = class ApplicationModule {
 };
 exports.ApplicationModule = ApplicationModule;
 exports.ApplicationModule = ApplicationModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule, firebase_module_1.FirebaseModule, config_1.ConfigModule],
-        providers: [auth_service_1.AuthService],
-        exports: [auth_service_1.AuthService],
+        imports: [database_module_1.DatabaseModule, firebase_module_1.FirebaseModule, config_1.ConfigModule, storage_module_1.StorageModule],
+        providers: [auth_service_1.AuthService, blog_service_1.BlogService],
+        exports: [auth_service_1.AuthService, blog_service_1.BlogService],
     })
 ], ApplicationModule);
 //# sourceMappingURL=application.module.js.map

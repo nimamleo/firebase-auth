@@ -9,12 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("./pgsql/entities/user.entity");
 const config_1 = require("@nestjs/config");
 const pgsql_config_1 = require("./pgsql/config/pgsql.config");
-const user_provider_1 = require("./provider/user.provider");
-const user_pgsql_service_1 = require("./pgsql/service/user-pgsql.service");
 const blog_entity_1 = require("./pgsql/entities/blog.entity");
+const blog_provider_1 = require("./provider/blog.provider");
+const blog_pgsql_service_1 = require("./pgsql/service/blog-pgsql.service");
 let DatabaseModule = class DatabaseModule {
 };
 exports.DatabaseModule = DatabaseModule;
@@ -35,21 +34,20 @@ exports.DatabaseModule = DatabaseModule = __decorate([
                         database: pgsqlConfig.db,
                         migrationsRun: true,
                         synchronize: false,
-                        migrations: [],
-                        entities: [user_entity_1.UserEntity, blog_entity_1.BlogEntity],
+                        entities: [blog_entity_1.BlogEntity],
                         logging: true,
                     };
                 },
             }),
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.UserEntity, blog_entity_1.BlogEntity]),
+            typeorm_1.TypeOrmModule.forFeature([blog_entity_1.BlogEntity]),
         ],
         providers: [
             {
-                provide: user_provider_1.USER_DATABASE_PROVIDER,
-                useClass: user_pgsql_service_1.UserPgSqlService,
+                provide: blog_provider_1.BLOG_DATABASE_PROVIDER,
+                useClass: blog_pgsql_service_1.BlogPgsqlService,
             },
         ],
-        exports: [user_provider_1.USER_DATABASE_PROVIDER],
+        exports: [blog_provider_1.BLOG_DATABASE_PROVIDER],
     })
 ], DatabaseModule);
 //# sourceMappingURL=database.module.js.map

@@ -11,8 +11,6 @@ import { ConfigService } from '@nestjs/config';
 import { Err, Ok, Result } from '../../../common/result';
 import { GenericStatusCodes } from '../../../common/enums/status.enum';
 import { UserRecord } from 'firebase-admin/lib/auth';
-import * as bcrypt from 'bcrypt';
-import { firestore } from 'firebase-admin';
 
 @Injectable()
 export class FirebaseService {

@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './pgsql/entities/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { IPgsqlConfig, PGSQL_CONFIG_TOKEN } from './pgsql/config/pgsql.config';
-import { USER_DATABASE_PROVIDER } from './provider/user.provider';
-import { UserPgSqlService } from './pgsql/service/user-pgsql.service';
 import { BlogEntity } from './pgsql/entities/blog.entity';
+import { BLOG_DATABASE_PROVIDER } from './provider/blog.provider';
+import { BlogPgsqlService } from './pgsql/service/blog-pgsql.service';
 
 @Module({
   imports: [
@@ -23,20 +22,20 @@ import { BlogEntity } from './pgsql/entities/blog.entity';
           database: pgsqlConfig.db,
           migrationsRun: true,
           synchronize: false,
-          migrations: [],
-          entities: [UserEntity, BlogEntity],
+          // migrations: ['*.migration.{ts,js}'],
+          entities: [BlogEntity],
           logging: true,
         };
       },
     }),
-    TypeOrmModule.forFeature([UserEntity, BlogEntity]),
+    TypeOrmModule.forFeature([BlogEntity]),
   ],
   providers: [
     {
-      provide: USER_DATABASE_PROVIDER,
-      useClass: UserPgSqlService,
+      provide: BLOG_DATABASE_PROVIDER,
+      useClass: BlogPgsqlService,
     },
   ],
-  exports: [USER_DATABASE_PROVIDER],
+  exports: [BLOG_DATABASE_PROVIDER],
 })
 export class DatabaseModule {}

@@ -8,23 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const firebase_service_1 = require("../../infrastructure/firebase/service/firebase.service");
 const handle_error_decorator_1 = require("../../common/decorators/handle-error.decorator");
-const user_provider_1 = require("../../infrastructure/database/provider/user.provider");
 const result_1 = require("../../common/result");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const jwt_config_1 = require("../../infrastructure/jwt/config/jwt.config");
 const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
-    constructor(userDatabaseProvider, firebaseService, configService) {
-        this.userDatabaseProvider = userDatabaseProvider;
+    constructor(firebaseService, configService) {
         this.firebaseService = firebaseService;
         this.jwtConfig = configService.get(jwt_config_1.JWT_CONFIG_TOKEN);
     }
@@ -43,12 +38,10 @@ let AuthService = class AuthService {
     }
     async verifyUser(token) {
         const decoded = jwt.verify(token, this.jwtConfig.secret);
-        console.log(decoded);
         const res = await this.firebaseService.getUserById(decoded['uid']);
         if (res.isError()) {
             return (0, result_1.Err)(res.err);
         }
-        console.log(res);
         return (0, result_1.Ok)({
             email: res.value.email,
             password: null,
@@ -108,8 +101,7 @@ __decorate([
 ], AuthService.prototype, "generateToken", null);
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)(user_provider_1.USER_DATABASE_PROVIDER)),
-    __metadata("design:paramtypes", [Object, firebase_service_1.FirebaseService,
+    __metadata("design:paramtypes", [firebase_service_1.FirebaseService,
         config_1.ConfigService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

@@ -2,10 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../infrastructure/firebase/service/firebase.service';
 import { IUser } from '../../models/user.model';
 import { HandleError } from '../../common/decorators/handle-error.decorator';
-import {
-  IUserDatabaseProvider,
-  USER_DATABASE_PROVIDER,
-} from '../../infrastructure/database/provider/user.provider';
 import { Err, Ok, Result } from '../../common/result';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -19,8 +15,6 @@ import { ConfigService } from '@nestjs/config';
 export class AuthService {
   private readonly jwtConfig: IJwtConfig;
   constructor(
-    @Inject(USER_DATABASE_PROVIDER)
-    private readonly userDatabaseProvider: IUserDatabaseProvider,
     private readonly firebaseService: FirebaseService,
     configService: ConfigService,
   ) {
@@ -48,12 +42,10 @@ export class AuthService {
   @HandleError
   async verifyUser(token: string): Promise<Result<IUser>> {
     const decoded = jwt.verify(token, this.jwtConfig.secret);
-    console.log(decoded);
     const res = await this.firebaseService.getUserById(decoded['uid']);
     if (res.isError()) {
       return Err(res.err);
     }
-    console.log(res);
 
     return Ok({
       email: res.value.email,

@@ -12,9 +12,19 @@ export class CreateBlogRequest {
   @IsString()
   content: string;
 
+  @ApiProperty({ format: 'binary', type: 'string' })
+  file: Buffer;
+}
+export class CreateBlogResponse {
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  id: string;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  content: string;
+
+  @ApiProperty()
   image: string;
 }
-export class CreateBlogResponse {}

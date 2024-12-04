@@ -28,12 +28,26 @@ __decorate([
     __metadata("design:type", String)
 ], CreateBlogRequest.prototype, "content", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateBlogRequest.prototype, "image", void 0);
+    (0, swagger_1.ApiProperty)({ format: 'binary', type: 'string' }),
+    __metadata("design:type", Buffer)
+], CreateBlogRequest.prototype, "file", void 0);
 class CreateBlogResponse {
 }
 exports.CreateBlogResponse = CreateBlogResponse;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateBlogResponse.prototype, "id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateBlogResponse.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateBlogResponse.prototype, "content", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateBlogResponse.prototype, "image", void 0);
 //# sourceMappingURL=create-blog.model.js.map
