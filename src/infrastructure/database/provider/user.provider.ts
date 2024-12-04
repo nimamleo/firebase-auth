@@ -6,6 +6,8 @@ export interface IUserReader {
 }
 export interface IUserWriter {
   createUser(iUser: IUser): Promise<Result<IUserEntity>>;
+
+  deleteUser(id: string): Promise<Result<boolean>>;
 }
 export interface IUserDatabaseProvider extends IUserReader, IUserWriter {}
 

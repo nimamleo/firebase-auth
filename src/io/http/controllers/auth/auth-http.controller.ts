@@ -8,9 +8,12 @@ import {
 } from '@nestjs/common';
 import { AbstractHttpController } from '../../../../common/http/abstract-http.controller';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { RegisterRequest } from './models/register.model';
+import { RegisterRequest, RegisterResponse } from './models/register.model';
 import { AuthService } from '../../../../application/services/auth.service';
 import { Role } from '../../../../enum/role.enum';
+import { Response } from 'express';
+import { Ok } from '../../../../common/result';
+import { LoginRequest } from './models/login.model';
 
 @Controller('auth')
 @UsePipes(new ValidationPipe())
@@ -29,5 +32,26 @@ export class AuthHttpController extends AbstractHttpController {
       role: Role.USER,
       firstName: body.firstName,
     });
+    if (res.isError()) {
+      this.sendResult(response, res);
+      return;
+    }
+
+    this.sendResult(response, Ok<RegisterResponse>({ token: res.value }));
+  }
+
+  @Post('login')
+  @ApiBody({ type: LoginRequest })
+  async login(@Res() response: Response, @Body() body: LoginRequest) {
+    const res = await this.authService.login({
+      email: body.email,
+      password: body.password,
+    });
+    if (res.isError()) {
+      this.sendResult(response, res);
+      return;
+    }
+
+    this.sendResult(response, Ok<RegisterResponse>({ token: res.value }));
   }
 }

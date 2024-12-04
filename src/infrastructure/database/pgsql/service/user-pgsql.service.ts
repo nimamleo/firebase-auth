@@ -39,4 +39,14 @@ export class UserPgSqlService implements IUserDatabaseProvider {
 
     return Ok(UserEntity.toIUserEntity(res));
   }
+
+  @HandleError
+  async deleteUser(id: string): Promise<Result<boolean>> {
+    const res = await this.userRepository.delete(id);
+    if (res.affected === 0) {
+      return Err('some thing went wrong', GenericStatusCodes.INTERNAL);
+    }
+
+    return Ok(res.affected > 0);
+  }
 }

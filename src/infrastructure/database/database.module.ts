@@ -23,7 +23,7 @@ import { UserPgSqlService } from './pgsql/service/user-pgsql.service';
           migrationsRun: true,
           synchronize: false,
           migrations: [],
-          entities: [],
+          entities: [UserEntity],
           logging: true,
         };
       },

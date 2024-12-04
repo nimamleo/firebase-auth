@@ -18,4 +18,7 @@ export class RegisterRequest {
   @Length(6, 20)
   password: string;
 }
-export class RegisterResponse {}
+export class RegisterResponse {
+  @ApiProperty()
+  token: string;
+}
