@@ -22,7 +22,7 @@ import { BlogPgsqlService } from './pgsql/service/blog-pgsql.service';
           database: pgsqlConfig.db,
           migrationsRun: true,
           synchronize: false,
-          // migrations: ['*.migration.{ts,js}'],
+          migrations: ['src/**/*.migration.{ts,js}'],
           entities: [BlogEntity],
           logging: true,
         };
